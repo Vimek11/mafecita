@@ -12,75 +12,228 @@
       --accent: #f4b942;
       --accent-dark: #c98700;
       --soft: #ffe7a3;
+      --white: #ffffff;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+    }
 
     body {
       margin: 0;
       min-height: 100vh;
       font-family: Georgia, 'Times New Roman', serif;
-      background: radial-gradient(circle at top, #fff1b8, var(--bg));
+      background:
+        radial-gradient(circle at top, #fff1b8 0%, var(--bg) 48%, #fff4d2 100%);
       color: var(--text);
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 24px;
+      padding: 16px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .petals {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .petal {
+      position: absolute;
+      top: -60px;
+      font-size: 22px;
+      opacity: 0.2;
+      animation-name: fall;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+    }
+
+    .petal:nth-child(1) { left: 8%; animation-duration: 13s; animation-delay: 0s; }
+    .petal:nth-child(2) { left: 28%; animation-duration: 16s; animation-delay: 4s; }
+    .petal:nth-child(3) { left: 52%; animation-duration: 14s; animation-delay: 2s; }
+    .petal:nth-child(4) { left: 74%; animation-duration: 18s; animation-delay: 6s; }
+    .petal:nth-child(5) { left: 91%; animation-duration: 15s; animation-delay: 8s; }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-60px) translateX(0) rotate(0deg);
+      }
+      50% {
+        transform: translateY(55vh) translateX(22px) rotate(180deg);
+      }
+      100% {
+        transform: translateY(115vh) translateX(-12px) rotate(360deg);
+      }
     }
 
     .container {
       max-width: 760px;
       width: 100%;
+      position: relative;
+      z-index: 1;
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.92);
       border: 1px solid #f5d77b;
       border-radius: 28px;
-      padding: 32px;
+      padding: 28px 18px;
       box-shadow: 0 20px 60px rgba(104, 73, 0, 0.12);
       text-align: center;
+      backdrop-filter: blur(10px);
     }
 
     h1 {
-      margin: 0 0 10px;
-      font-size: clamp(2rem, 6vw, 3.7rem);
-      line-height: 1;
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 9vw, 3.7rem);
+      line-height: 1.05;
     }
 
     .subtitle {
       color: var(--muted);
-      font-size: 1.05rem;
-      margin-bottom: 28px;
+      font-size: 1rem;
+      margin: 0 0 26px;
       line-height: 1.5;
+    }
+
+    .intro {
+      margin: 0;
+      color: var(--text);
+      font-size: 1rem;
     }
 
     .countdown {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 12px;
       margin: 24px 0 30px;
     }
 
     .time-box {
-      background: var(--soft);
+      background: linear-gradient(180deg, #fff3c6 0%, var(--soft) 100%);
       border-radius: 18px;
-      padding: 14px 8px;
+      padding: 12px 8px 14px;
       border: 1px solid #f2c84f;
+      box-shadow:
+        inset 0 -8px 18px rgba(201, 135, 0, 0.07),
+        0 10px 20px rgba(104, 73, 0, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .flip-card {
+      width: 100%;
+      height: 58px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 900px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #fffdf4 0%, #ffe8a6 100%);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        inset 0 -12px 20px rgba(201, 135, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .flip-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 1px;
+      background: rgba(160, 98, 0, 0.2);
+      z-index: 3;
     }
 
     .number {
       display: block;
-      font-size: 2rem;
+      font-size: 2.55rem;
+      font-family: Georgia, 'Times New Roman', serif;
       font-weight: bold;
+      line-height: 1;
       color: var(--accent-dark);
+      text-shadow: 0 2px 0 rgba(255, 255, 255, 0.75);
+      position: relative;
+      z-index: 2;
+    }
+
+    .flip-card.flip .number {
+      animation: numberPop 0.68s cubic-bezier(.18,.89,.32,1.28);
+    }
+
+    .flip-card.flip::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 50%;
+      background: linear-gradient(180deg, rgba(244,185,66,0.35), rgba(201,135,0,0.14));
+      transform-origin: top;
+      animation: flapFall 0.68s cubic-bezier(.2,.65,.2,1);
+      z-index: 1;
+      border-radius: 0 0 14px 14px;
+    }
+
+    @keyframes flapFall {
+      0% {
+        transform: rotateX(-92deg);
+        opacity: 0.15;
+      }
+      35% {
+        transform: rotateX(-38deg);
+        opacity: 0.55;
+      }
+      70% {
+        transform: rotateX(8deg);
+        opacity: 0.35;
+      }
+      100% {
+        transform: rotateX(0deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes numberPop {
+      0% {
+        transform: translateY(-16px) rotateX(65deg);
+        opacity: 0;
+        filter: blur(2px);
+      }
+      45% {
+        transform: translateY(2px) rotateX(-8deg);
+        opacity: 1;
+        filter: blur(0);
+      }
+      70% {
+        transform: translateY(-1px) rotateX(4deg);
+      }
+      100% {
+        transform: translateY(0) rotateX(0deg);
+      }
     }
 
     .label {
-      font-size: 0.8rem;
+      display: block;
+      margin-top: 8px;
+      font-size: 0.78rem;
       color: var(--muted);
       text-transform: uppercase;
       letter-spacing: 0.08em;
+      font-family: Arial, sans-serif;
+      position: relative;
+      z-index: 1;
     }
 
     .mystery-box {
@@ -95,39 +248,91 @@
     .digits {
       display: flex;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
       margin: 24px 0;
       flex-wrap: wrap;
     }
 
     .digit {
-      width: 52px;
-      height: 60px;
+      width: 48px;
+      height: 56px;
       border-radius: 14px;
       background: #fffdf8;
       border: 1px solid #f3dfad;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       font-weight: bold;
       color: var(--accent-dark);
+      box-shadow: 0 8px 18px rgba(104, 73, 0, 0.07);
+    }
+
+    .code {
+      margin: 20px 0 0;
+      color: var(--muted);
+      font-size: 1rem;
     }
 
     .note {
-      margin-top: 26px;
+      margin: 24px 0 0;
       color: var(--muted);
       font-size: 0.95rem;
       line-height: 1.5;
     }
 
-    @media (max-width: 560px) {
-      .card { padding: 24px 18px; }
-      .countdown { grid-template-columns: repeat(2, 1fr); }
+    @media (min-width: 700px) {
+      body {
+        padding: 24px;
+      }
+
+      .card {
+        padding: 36px;
+      }
+
+      .countdown {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .digit {
+        width: 52px;
+        height: 60px;
+      }
+
+      .flip-card {
+        height: 64px;
+      }
+
+      .number {
+        font-size: 2.75rem;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .card {
+        padding: 24px 14px;
+      }
+
+      .number {
+        font-size: 2.2rem;
+      }
+
+      .digit {
+        width: 42px;
+        height: 52px;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="petals" aria-hidden="true">
+    <span class="petal">🌻</span>
+    <span class="petal">🌻</span>
+    <span class="petal">🌻</span>
+    <span class="petal">🌻</span>
+    <span class="petal">🌻</span>
+  </div>
+
   <main class="container">
     <section class="card">
       <h1>🌻 Una bóveda para ti 🌻</h1>
@@ -137,23 +342,34 @@
         Cada número aparece cuando llega su momento.
       </p>
 
-      <p>Tiempo para el próximo número del criptex:</p>
+      <p class="intro">Tiempo para el próximo número del criptex:</p>
 
       <div class="countdown">
         <div class="time-box">
-          <span class="number" id="days">0</span>
+          <div class="flip-card" id="days-card">
+            <span class="number" id="days">00</span>
+          </div>
           <span class="label">días</span>
         </div>
+
         <div class="time-box">
-          <span class="number" id="hours">0</span>
+          <div class="flip-card" id="hours-card">
+            <span class="number" id="hours">00</span>
+          </div>
           <span class="label">horas</span>
         </div>
+
         <div class="time-box">
-          <span class="number" id="minutes">0</span>
+          <div class="flip-card" id="minutes-card">
+            <span class="number" id="minutes">00</span>
+          </div>
           <span class="label">min</span>
         </div>
+
         <div class="time-box">
-          <span class="number" id="seconds">0</span>
+          <div class="flip-card" id="seconds-card">
+            <span class="number" id="seconds">00</span>
+          </div>
           <span class="label">seg</span>
         </div>
       </div>
@@ -171,6 +387,8 @@
         <div class="digit">?</div>
       </div>
 
+      <p class="code">🔐 Código actual: • • ? ? ?</p>
+
       <p class="note">
         Cuando el contador llegue a cero, un nuevo número estará listo para ser revelado.
       </p>
@@ -178,23 +396,39 @@
   </main>
 
   <script>
-    // Fecha del próximo número: 12 de junio de 2026 a las 6:00 p.m. Colombia
-    const targetDate = new Date("2026-06-03T19:00:00-05:00").getTime();
+    // Próximo número: jueves 4 de junio de 2026 a las 7:00 p.m. Colombia
+    const targetDate = new Date("2026-06-04T19:00:00-05:00").getTime();
+
+    function setNumber(id, value) {
+      const element = document.getElementById(id);
+      const card = document.getElementById(id + "-card");
+      const nextValue = String(value).padStart(2, "0");
+
+      if (element.textContent !== nextValue) {
+        card.classList.remove("flip");
+        void card.offsetWidth;
+        element.textContent = nextValue;
+        card.classList.add("flip");
+      }
+    }
 
     function updateCountdown() {
       const now = new Date().getTime();
       const distance = targetDate - now;
 
       if (distance <= 0) {
-        document.querySelector('.card').innerHTML = `
+        document.querySelector(".card").innerHTML = `
           <h1>🌻 Nuevo número desbloqueado 🌻</h1>
+
           <p class="subtitle">
             Ya llegó el momento. El siguiente número del criptex está listo para ser revelado.
           </p>
+
           <div class="mystery-box">
             <strong>Estado actual:</strong><br />
             3 de 5 números descubiertos.
           </div>
+
           <div class="digits">
             <div class="digit">●</div>
             <div class="digit">●</div>
@@ -202,6 +436,9 @@
             <div class="digit">?</div>
             <div class="digit">?</div>
           </div>
+
+          <p class="code">🔐 Código actual: • • • ? ?</p>
+
           <p class="note">
             Todavía faltan piezas. Pero cada una te acerca más a la sorpresa.
           </p>
@@ -214,10 +451,10 @@
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      document.getElementById("days").textContent = days;
-      document.getElementById("hours").textContent = hours;
-      document.getElementById("minutes").textContent = minutes;
-      document.getElementById("seconds").textContent = seconds;
+      setNumber("days", days);
+      setNumber("hours", hours);
+      setNumber("minutes", minutes);
+      setNumber("seconds", seconds);
     }
 
     updateCountdown();
