@@ -322,6 +322,27 @@
         height: 52px;
       }
     }
+    .reduce-btn {
+  margin-top: 20px;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #f4b942, #c98700);
+  color: white;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(104, 73, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+.reduce-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(104, 73, 0, 0.25);
+}
+
+.reduce-btn:active {
+  transform: scale(0.95);
+}
   </style>
 </head>
 <body>
@@ -393,6 +414,9 @@
       <p class="note">
         Cuando el contador llegue a cero, un nuevo número estará listo para ser revelado.
       </p>
+      <button id="reduce-time-btn" class="reduce-btn">
+  😅 A veces da pereza esperar...
+</button>
     </section>
   </main>
 
@@ -459,6 +483,20 @@
 
     updateCountdown();
     setInterval(updateCountdown, 1000);
+
+
+    document.getElementById("reduce-time-btn").addEventListener("click", () => {
+  // Reducir 1 día (24h)
+  targetDate -= 1000 * 60 * 60 * 24;
+
+  // Cambiar texto del botón después del click
+  const btn = document.getElementById("reduce-time-btn");
+  btn.textContent = "😌 Bueno… solo un poquito menos";
+
+  // Opcional: desactivar el botón después de usarlo
+  btn.disabled = true;
+  btn.style.opacity = "0.6";
+});
   </script>
 </body>
 </html>
