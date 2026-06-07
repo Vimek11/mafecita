@@ -415,7 +415,7 @@
         Cuando el contador llegue a cero, un nuevo número estará listo para ser revelado.
       </p>
       <button id="reduce-time-btn" class="reduce-btn">
-  😅 A veces da pereza esperar...
+  💛 Si quieres… puedes adelantarlo un poquito
 </button>
     </section>
   </main>
@@ -484,16 +484,20 @@
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
+
     document.getElementById("reduce-time-btn").addEventListener("click", () => {
   targetDate -= 1000 * 60 * 60 * 24;
 
   updateCountdown();
 
   const btn = document.getElementById("reduce-time-btn");
-  btn.textContent = "😌 Bueno… solo un poquito menos";
+  btn.textContent = "😌 Está bien… 24h menos ⏳";
   btn.disabled = true;
   btn.style.opacity = "0.6";
-      alert("🙈 Bueno… pero solo un poquito…");
+
+  // 👉 mensaje bonito dentro de la página
+  const note = document.querySelector(".note");
+  note.innerHTML = "🥺 Bueno… te regalé 24 horas menos. No cuenta como trampa… solo fue un pequeño empujoncito 💛";
 });
   </script>
 </body>
