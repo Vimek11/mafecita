@@ -484,16 +484,14 @@
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
-
     document.getElementById("reduce-time-btn").addEventListener("click", () => {
-  // Reducir 1 día (24h)
   targetDate -= 1000 * 60 * 60 * 24;
 
-  // Cambiar texto del botón después del click
+  // 🔥 Forzar actualización visual
+  updateCountdown();
+
   const btn = document.getElementById("reduce-time-btn");
   btn.textContent = "😌 Bueno… solo un poquito menos";
-
-  // Opcional: desactivar el botón después de usarlo
   btn.disabled = true;
   btn.style.opacity = "0.6";
 });
