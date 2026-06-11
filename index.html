@@ -322,27 +322,6 @@
         height: 52px;
       }
     }
-    .reduce-btn {
-  margin-top: 20px;
-  padding: 12px 18px;
-  border: none;
-  border-radius: 14px;
-  background: linear-gradient(180deg, #f4b942, #c98700);
-  color: white;
-  font-size: 0.95rem;
-  cursor: pointer;
-  box-shadow: 0 8px 20px rgba(104, 73, 0, 0.2);
-  transition: all 0.2s ease;
-}
-
-.reduce-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 25px rgba(104, 73, 0, 0.25);
-}
-
-.reduce-btn:active {
-  transform: scale(0.95);
-}
   </style>
 </head>
 <body>
@@ -398,7 +377,7 @@
 
       <div class="mystery-box">
         <strong>Estado actual:</strong><br />
-        3 de 5 números descubiertos.
+        4 de 5 números descubiertos.
       </div>
 
       <div class="digits">
@@ -409,17 +388,16 @@
         <div class="digit">?</div>
       </div>
 
-      <p class="code">🔐 Código actual: • • • • ?</
-        
+      <p class="code">🔐 Código actual: • • • • ?</p>
+
       <p class="note">
         Cuando el contador llegue a cero, un nuevo número estará listo para ser revelado.
       </p>
-      
     </section>
   </main>
 
   <script>
-    let targetDate = new Date("2026-06-12T8:00:00-05:00").getTime();
+    const targetDate = new Date("2026-06-12T19:00:00-05:00").getTime();
 
     function setNumber(id, value) {
       const element = document.getElementById(id);
@@ -448,18 +426,18 @@
 
           <div class="mystery-box">
             <strong>Estado actual:</strong><br />
-            4 de 5 números descubiertos.
+            3 de 5 números descubiertos.
           </div>
 
           <div class="digits">
             <div class="digit">●</div>
             <div class="digit">●</div>
             <div class="digit">●</div>
-            <div class="digit">●</div>
+            <div class="digit">?</div>
             <div class="digit">?</div>
           </div>
 
-          <p class="code">🔐 Código actual: • • • • ?</p>
+          <p class="code">🔐 Código actual: • • • ? ?</p>
 
           <p class="note">
             Todavía faltan piezas. Pero cada una te acerca más a la sorpresa.
@@ -481,22 +459,6 @@
 
     updateCountdown();
     setInterval(updateCountdown, 1000);
-
-
-    document.getElementById("reduce-time-btn").addEventListener("click", () => {
-  targetDate -= 1000 * 60 * 60 * 24;
-
-  updateCountdown();
-
-  const btn = document.getElementById("reduce-time-btn");
-  btn.textContent = "😌 Está bien… 24h menos ⏳";
-  btn.disabled = true;
-  btn.style.opacity = "0.6";
-
-  // 👉 mensaje bonito dentro de la página
-  const note = document.querySelector(".note");
-  note.innerHTML = "🥺 Bueno… te regalé 24 horas menos. No cuenta como trampa… solo fue un pequeño empujoncito 💛";
-});
   </script>
 </body>
 </html>
